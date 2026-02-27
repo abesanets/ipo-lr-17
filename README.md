@@ -61,7 +61,7 @@ python manage.py runserver
 ```
 
 ## Технологии
-
+```
 - Python 3.10+
 - Django 5.x
 - Pillow
