@@ -3,6 +3,3 @@ venv/
 
 # Python
 __pycache__/
-
-# База данных
-db.sqlite3

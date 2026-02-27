@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Магазин электроники{% endblock %}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 16px;
+        }
+        header a:hover {
+            text-decoration: underline;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        nav a {
+            color: #ecf0f1;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .breadcrumb {
+            margin-bottom: 20px;
+            color: #777;
+        }
+        .breadcrumb a {
+            color: #2980b9;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        h1, h2 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        /* Сетка товаров */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .product-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #eee;
+        }
+        .product-card .no-image {
+            width: 100%;
+            height: 200px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px;
+        }
+        .product-card .info {
+            padding: 15px;
+        }
+        .product-card .info h3 {
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+        .product-card .info h3 a {
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        .product-card .info h3 a:hover {
+            color: #2980b9;
+        }
+        .product-card .category {
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+        .product-card .manufacturer {
+            color: #aaa;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        .product-card .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        .product-card .stock {
+            font-size: 13px;
+            color: #27ae60;
+            margin-top: 5px;
+        }
+        .product-card .stock.out {
+            color: #e74c3c;
+        }
+
+        /* Детальная страница */
+        .product-detail {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .product-detail img {
+            width: 100%;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        .product-detail .no-image-large {
+            width: 100%;
+            height: 400px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            border-radius: 8px;
+        }
+        .product-detail .details h1 {
+            margin-bottom: 10px;
+        }
+        .product-detail .details .price {
+            font-size: 28px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 15px;
+        }
+        .product-detail .details .meta {
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        .product-detail .details .meta span {
+            display: block;
+            color: #666;
+        }
+        .product-detail .details .description {
+            line-height: 1.6;
+            color: #555;
+        }
+
+        /* Фильтры и поиск */
+        .filters {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: end;
+        }
+        .filters .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .filters label {
+            font-size: 13px;
+            font-weight: bold;
+            color: #555;
+        }
+        .filters input, .filters select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .filters button {
+            padding: 8px 20px;
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .filters button:hover {
+            background-color: #2471a3;
+        }
+        .filters .reset {
+            background-color: #95a5a6;
+        }
+        .filters .reset:hover {
+            background-color: #7f8c8d;
+        }
+
+        /* Список категорий */
+        .categories-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .categories-list a {
+            padding: 8px 16px;
+            background: white;
+            border-radius: 20px;
+            text-decoration: none;
+            color: #2c3e50;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+            font-size: 14px;
+        }
+        .categories-list a:hover, .categories-list a.active {
+            background-color: #2980b9;
+            color: white;
+        }
+
+        /* Страница "О магазине" и "Об авторе" */
+        .page-content {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            line-height: 1.8;
+        }
+
+        .results-count {
+            color: #888;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Электроника</div>
+        <nav>
+            <a href="{% url 'index' %}">Главная</a>
+            <a href="{% url 'product_list' %}">Каталог</a>
+            <a href="{% url 'shop_info' %}">О магазине</a>
+            <a href="{% url 'about' %}">Об авторе</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        &copy; 2026 Магазин электроники. Лабораторная работа.
+    </footer>
+</body>
+</html>

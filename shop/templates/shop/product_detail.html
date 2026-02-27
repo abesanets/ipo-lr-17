@@ -1,0 +1,39 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}{{ product.name }} — Магазин электроники{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="{% url 'index' %}">Главная</a> →
+    <a href="{% url 'product_list' %}">Каталог</a> →
+    <a href="{% url 'product_list' %}?category={{ product.category.id }}">{{ product.category.name }}</a> →
+    {{ product.name }}
+</div>
+
+<div class="product-detail">
+    <div>
+        {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        {% else %}
+            <div class="no-image-large">Нет фото</div>
+        {% endif %}
+    </div>
+    <div class="details">
+        <h1>{{ product.name }}</h1>
+        <div class="price">{{ product.price }} ₽</div>
+        <div class="meta">
+            <span><strong>Категория:</strong> {{ product.category.name }}</span>
+            <span><strong>Производитель:</strong> {{ product.manufacturer.name }} ({{ product.manufacturer.country }})</span>
+            {% if product.stock > 0 %}
+                <span style="color: #27ae60;"><strong>В наличии:</strong> {{ product.stock }} шт.</span>
+            {% else %}
+                <span style="color: #e74c3c;"><strong>Нет в наличии</strong></span>
+            {% endif %}
+        </div>
+        <h2>Описание</h2>
+        <div class="description">
+            {{ product.description }}
+        </div>
+    </div>
+</div>
+{% endblock %}

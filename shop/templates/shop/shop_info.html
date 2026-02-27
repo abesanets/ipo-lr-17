@@ -1,0 +1,25 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}О магазине{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="{% url 'index' %}">Главная</a> → О магазине
+</div>
+
+<h1>О магазине</h1>
+<div class="page-content">
+    <p><strong>Тема:</strong> Интернет-магазин электроники</p>
+    <p>Наш магазин предлагает широкий ассортимент электроники — смартфоны, ноутбуки,
+    планшеты, телевизоры, наушники, умные часы, игровые консоли, фотоаппараты,
+    аксессуары и колонки.</p>
+    <p>Мы работаем с ведущими мировыми производителями: Samsung, Apple, Xiaomi, Sony, LG.</p>
+    <br>
+    <p><strong>Статистика:</strong></p>
+    <ul style="padding-left: 20px; line-height: 2;">
+        <li>Категорий: {{ categories_count }}</li>
+        <li>Товаров: {{ products_count }}</li>
+        <li>Производителей: {{ manufacturers_count }}</li>
+    </ul>
+</div>
+{% endblock %}

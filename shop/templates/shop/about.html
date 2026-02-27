@@ -1,0 +1,17 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Об авторе{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="{% url 'index' %}">Главная</a> → Об авторе
+</div>
+
+<h1>Об авторе</h1>
+<div class="page-content">
+    <p><strong>ФИО:</strong> Бесанец Алексей Александрович</p>
+    <p><strong>Группа:</strong> 88ТП</p>
+    <p><strong>Дисциплина:</strong> Веб-разработка</p>
+    <p><strong>Лабораторная работа №17:</strong> Работа с Django ORM</p>
+</div>
+{% endblock %}
