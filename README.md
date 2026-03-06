@@ -56,7 +56,6 @@ venv\Scripts\activate          # Windows
 pip install django Pillow
 python manage.py migrate
 python manage.py createsuperuser
-python fill_database.py
 python manage.py runserver
 ```
 
